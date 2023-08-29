@@ -7,7 +7,6 @@ const connectDB = (url) => {
 };
 // sahil
 const app = express();
-const aaz = "k";
 const start = async () => {
   try {
     await connectDB(
