@@ -1,28 +1,34 @@
 import express from "express";
 import mongoose from "mongoose";
-import Test from "./models/usertest.js";
+import dotenv from "dotenv";
+import "express-async-errors";
 
-const connectDB = (url) => {
-  return mongoose.connect(url);
-};
-const sahil="lodu";
+import connectDB from "./db/connect.js";
+import authRouter from "./routes/authRoute.js";
+import notFoundMiddleware from "./middlewares/not-found.js";
+import errorHandlerMiddleware from "./middlewares/error-handler.js";
+
+dotenv.config();
+
 const app = express();
+const port = process.env.PORT || 5000;
+
+app.use(express.json());
+app.use("/api/v1/auth", authRouter);
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
+
 const start = async () => {
   try {
-    await connectDB(
-      "mongodb+srv://schhabra602:passwordMongoDB@cloud-broker.lnypaf5.mongodb.net/practise?retryWrites=true&w=majority"
-    )
+    await connectDB(process.env.MONGO_URL)
       .then(() => {
         console.log("connected DB successfully");
       })
       .catch((err) => console.log(err));
 
-    app.listen(5000, () => {
-      console.log("listening on port 5000");
+    app.listen(port, () => {
+      console.log("listening on port: " + port);
     });
-
-    const testUser = new Test({ name: "sahil" });
-    testUser.save();
   } catch (error) {
     console.log(error);
   }
