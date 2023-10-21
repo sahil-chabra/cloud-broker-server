@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cors from "cors";
 import "express-async-errors";
 
 import connectDB from "./db/connect.js";
@@ -14,6 +15,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
+app.use(cors());
 app.use("/api/v1/auth", authRouter);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

@@ -5,9 +5,9 @@ import attachCookie from "../utils/attachCookies.js";
 
 const signup = async (req, res, next) => {
   // console.log(req);
-  const { name, email, password, passwordConfirm } = req.body;
-
-  if (!name || !email || !password || !passwordConfirm)
+  const { name, email, password, confirmPass } = req.body;
+  console.log(req.body);
+  if (!name || !email || !password || !confirmPass)
     throw new BadRequestError("Please provide all the necessary details");
 
   const userAlreadyExists = await User.findOne({ email: email });
@@ -17,7 +17,12 @@ const signup = async (req, res, next) => {
     throw new BadRequestError("Email already in use");
   }
 
-  const newUser = await User.create({ name, email, password, passwordConfirm });
+  const newUser = await User.create({
+    name,
+    email,
+    password,
+    passwordConfirm: confirmPass,
+  });
   const token = newUser.createJWT();
 
   attachCookie({ res, token });
@@ -82,4 +87,14 @@ const updateUser = async (req, res, next) => {
   });
 };
 
-export { login, signup, updateUser };
+const getCurrentUser = async (req, res, next) => {
+  const user = await User.findOne({ _id: req.user.userId });
+  res.status(200).json({
+    status: "success",
+    data: {
+      user,
+    },
+  });
+};
+
+export { login, signup, updateUser, getCurrentUser };
