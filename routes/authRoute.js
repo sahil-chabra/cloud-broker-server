@@ -5,14 +5,20 @@ import {
   login,
   updateUser,
   getCurrentUser,
+  signupProvider,
+  loginProvider,
+  getCurrentProvider,
 } from "../controllers/authController.js";
-import authenticateUser from "../middlewares/auth.js";
+import { authUser, authProvider } from "../middlewares/auth.js";
 
 const authRouter = express.Router();
 
 authRouter.post("/register", signup);
 authRouter.post("/login", login);
-authRouter.patch("/updateUser", authenticateUser, updateUser);
-authRouter.get("/getCurrentUser", authenticateUser, getCurrentUser);
+authRouter.patch("/updateUser", authUser, updateUser);
+authRouter.get("/getCurrentUser", authUser, getCurrentUser);
+authRouter.post("/registerProvider", signupProvider);
+authRouter.post("/loginProvider", loginProvider);
+authRouter.get("/getCurrentProvider", authProvider, getCurrentUser);
 
 export default authRouter;
