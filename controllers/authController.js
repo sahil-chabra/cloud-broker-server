@@ -112,8 +112,10 @@ const signupProvider = async (req, res, next) => {
     cpu_capacity,
     memory_size,
     boot_time,
-    scale_up_down,
-    scale_time,
+    scale_up_time,
+    scale_down_time,
+    scale_up,
+    scale_down,
     auto_scaling,
     storage,
     confirmPass,
@@ -142,8 +144,10 @@ const signupProvider = async (req, res, next) => {
     cpu_capacity,
     memory_size,
     boot_time,
-    scale_up_down,
-    scale_time,
+    scale_up_time,
+    scale_down_time,
+    scale_up,
+    scale_down,
     auto_scaling,
     storage,
   });
@@ -181,6 +185,7 @@ const loginProvider = async (req, res, next) => {
     status: "success",
     data: {
       provider,
+      token,
     },
   });
 };

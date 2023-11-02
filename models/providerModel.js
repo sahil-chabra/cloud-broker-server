@@ -16,8 +16,10 @@ const providerSchema = new mongoose.Schema({
   cpu_capacity: { type: String },
   memory_size: { type: String },
   boot_time: { type: String },
-  scale_up_down: { type: String },
-  scale_time: { type: String },
+  scale_up: { type: String },
+  scale_down: { type: String },
+  scale_up_time: { type: String },
+  scale_down_time: { type: String },
   auto_scaling: { type: String },
   storage: { type: String },
   email: {
